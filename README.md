@@ -3,11 +3,11 @@
 ### Problem
 Provide 2 http endpoints that accepts JSON base64 encoded binary data on both
 endpoints.
-- <host>/v1/diff/<ID>/left and <host>/v1/diff/<ID>/right
+- /v1/diff/${id}/left and /v1/diff/${id}/right
 
 The provided data needs to be diff-ed and the results shall be available on a third end
 point
-- <host>/v1/diff/<ID>
+- /v1/diff/${id}
 
 The results shall provide the following info in JSON format
 - If equal return that
@@ -37,9 +37,11 @@ The results shall provide the following info in JSON format
 Java 8 ,  
 Maven  and (optionally an IDE)
 
-- **To build and run use :** _mvn clean package_ 
+- **To build and package use :** _mvn clean package_ 
 (you need to be connected to the internet for downloading the dependencies)
 
 - **Once the app is build** and packaged (which also means test were run unless you chose to skip them)
- under _target/generated-docs/api-doc-html_ you would find valuable soure for test scenarios and example requests and responses. 
+ under _target/generated-docs/api-doc-html_ you would find valuable soure for test scenarios and example requests and responses.
+  
+- **To run use :** _java -jar target/base64-diff-0.0.1-SNAPSHOT.jar_
   
