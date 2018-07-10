@@ -1,4 +1,4 @@
-## WAES assignment Project
+## WAES Project
 
 ### Problem
 Provide 2 http endpoints that accepts JSON base64 encoded binary data on both
