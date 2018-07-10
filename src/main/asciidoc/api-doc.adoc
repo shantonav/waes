@@ -1,0 +1,172 @@
+= Getting Started With WEAS diff app
+
+== The solution is Spring boot based and considers the following things
+== 1. String is the only allowed object to be Base 64 encoded
+== 2. Embedded Mongo DB has been considered for document store.
+== 3. Document has been structured around JSON
+== 4. REST endpoints are strictly JSON content processing
+== 5. Input validation is Javax validation driven with custom validator.
+== 6. Proper DB isolation has been considered using Java8 concurrent locks.
+== 7. Exception handler has been put to place.
+== 8. Custom REST error has been created to handle system exceptions and HTTP errors
+== 9. Focus has been given more in integration testing.
+== 10. Documentation has been created using Spring RESTDocs and JUnit.
+== 11. Code itself is the documentation here.
+== 12. ASCIIDoctor style code API doc generation has been done.
+
+== Things out of scope
+== 1. DB scaling or sharding
+== 2. Secure REST services
+== 3. HTTPS
+== 4. Auto-scaling
+== 5. Generic binary object handling, would not be possible for doing diff.
+
+`== One open question : when files are of same length but have differences in them, what is meant by "length in data" ?`
+
+Examples of important test scenarios covered to meet the objectives of the solution
+
+=== 1. Left data add service - HTTP 201
+
+.request
+include::{snippets}/addLeft-for-123-HTTP-201/path-parameters.adoc[]
+include::{snippets}/addLeft-for-123-HTTP-201/http-request.adoc[]
+include::{snippets}/addLeft-for-123-HTTP-201/curl-request.adoc[]
+
+.response
+include::{snippets}/addLeft-for-123-HTTP-201/http-response.adoc[]
+
+=== 2. Trying to do the diff with only left data - HTTP 400
+.request
+include::{snippets}/diff-for-123-with-only-left-HTTP-400/path-parameters.adoc[]
+include::{snippets}/diff-for-123-with-only-left-HTTP-400/http-request.adoc[]
+include::{snippets}/diff-for-123-with-only-left-HTTP-400/curl-request.adoc[]
+
+.response
+include::{snippets}/diff-for-123-with-only-left-HTTP-400/http-response.adoc[]
+
+=== 3. Right data add service - HTTP 201
+.request
+include::{snippets}/addRight-for-123-HTTP-201/path-parameters.adoc[]
+include::{snippets}/addRight-for-123-HTTP-201/http-request.adoc[]
+include::{snippets}/addRight-for-123-HTTP-201/curl-request.adoc[]
+
+.response
+include::{snippets}/addRight-for-123-HTTP-201/http-response.adoc[]
+
+=== 4. No difference in data added for ID 123 - HTTP 200
+
+.request
+include::{snippets}/nodiff-for-123-HTTP-repsonse-200/path-parameters.adoc[]
+include::{snippets}/nodiff-for-123-HTTP-repsonse-200/http-request.adoc[]
+include::{snippets}/nodiff-for-123-HTTP-repsonse-200/curl-request.adoc[]
+
+.response
+include::{snippets}/nodiff-for-123-HTTP-repsonse-200/http-response.adoc[]
+
+=== 5. Diff with Non Existent ID - 124 - HTTP 400
+
+.request
+include::{snippets}/diff-for-unknown-ID-124-HTTP-400/path-parameters.adoc[]
+include::{snippets}/diff-for-unknown-ID-124-HTTP-400/http-request.adoc[]
+include::{snippets}/diff-for-unknown-ID-124-HTTP-400/curl-request.adoc[]
+
+.response
+include::{snippets}/diff-for-unknown-ID-124-HTTP-400/http-response.adoc[]
+
+=== 6. Diff with POST which is not allowed - HTTP 405
+
+.request
+include::{snippets}/diff-with-POST-HTTP-405/path-parameters.adoc[]
+include::{snippets}/diff-with-POST-HTTP-405/http-request.adoc[]
+include::{snippets}/diff-with-POST-HTTP-405/curl-request.adoc[]
+
+.response
+include::{snippets}/diff-with-POST-HTTP-405/http-response.adoc[]
+
+
+=== 7. Left data with non-Base64 encoded string text - HTTP 400
+
+.request
+include::{snippets}/addRight-for-123-with-non-base64-data-HTTP-repsonse-400/path-parameters.adoc[]
+include::{snippets}/addRight-for-123-with-non-base64-data-HTTP-repsonse-400/http-request.adoc[]
+include::{snippets}/addRight-for-123-with-non-base64-data-HTTP-repsonse-400/curl-request.adoc[]
+
+.response
+include::{snippets}/addRight-for-123-with-non-base64-data-HTTP-repsonse-400/http-response.adoc[]
+
+=== 8. left data with null Base64 input - HTTP 400
+
+.request
+include::{snippets}/addRight-for-123-with-null-data-HTTP-repsonse-400/path-parameters.adoc[]
+include::{snippets}/addRight-for-123-with-null-data-HTTP-repsonse-400/http-request.adoc[]
+include::{snippets}/addRight-for-123-with-null-data-HTTP-repsonse-400/curl-request.adoc[]
+
+.response
+include::{snippets}/addRight-for-123-with-null-data-HTTP-repsonse-400/http-response.adoc[]
+
+
+=== 9. Add left Data For ID 222 - HTTP 201
+
+.request
+include::{snippets}/addLeft-for-222-with-base64-encoded-data-HTTP-repsonse-201/path-parameters.adoc[]
+include::{snippets}/addLeft-for-222-with-base64-encoded-data-HTTP-repsonse-201/http-request.adoc[]
+include::{snippets}/addLeft-for-222-with-base64-encoded-data-HTTP-repsonse-201/curl-request.adoc[]
+
+.response
+include::{snippets}/addLeft-for-222-with-base64-encoded-data-HTTP-repsonse-201/http-response.adoc[]
+
+=== 10. Add right data for ID 222 - HTTP 201
+
+.request
+include::{snippets}/addright-for-222-with-base64-encoded-data-HTTP-repsonse-201/path-parameters.adoc[]
+include::{snippets}/addright-for-222-with-base64-encoded-data-HTTP-repsonse-201/http-request.adoc[]
+include::{snippets}/addright-for-222-with-base64-encoded-data-HTTP-repsonse-201/curl-request.adoc[]
+
+.response
+include::{snippets}/addright-for-222-with-base64-encoded-data-HTTP-repsonse-201/http-response.adoc[]
+
+=== 11. Diff for ID 222 with same length and 1 difference - HTTP 200
+
+.request
+include::{snippets}/diff-for-222-with-1-diff-HTTP-repsonse-200/path-parameters.adoc[]
+include::{snippets}/diff-for-222-with-1-diff-HTTP-repsonse-200/http-request.adoc[]
+include::{snippets}/diff-for-222-with-1-diff-HTTP-repsonse-200/curl-request.adoc[]
+
+.response
+include::{snippets}/diff-for-222-with-1-diff-HTTP-repsonse-200/http-response.adoc[]
+
+=== 12. Add left Data For ID 223 - HTTP 201
+
+.request
+include::{snippets}/addLeft-for-223-with-base64-encoded-data-HTTP-repsonse-201/path-parameters.adoc[]
+include::{snippets}/addLeft-for-223-with-base64-encoded-data-HTTP-repsonse-201/http-request.adoc[]
+include::{snippets}/addLeft-for-223-with-base64-encoded-data-HTTP-repsonse-201/curl-request.adoc[]
+
+.response
+include::{snippets}/addLeft-for-223-with-base64-encoded-data-HTTP-repsonse-201/http-response.adoc[]
+
+=== 13. Add right data for ID 223 - HTTP 201
+
+.request
+include::{snippets}/addright-for-223-with-base64-encoded-data-HTTP-repsonse-201/path-parameters.adoc[]
+include::{snippets}/addright-for-223-with-base64-encoded-data-HTTP-repsonse-201/http-request.adoc[]
+include::{snippets}/addright-for-223-with-base64-encoded-data-HTTP-repsonse-201/curl-request.adoc[]
+
+.response
+include::{snippets}/addright-for-223-with-base64-encoded-data-HTTP-repsonse-201/http-response.adoc[]
+
+=== 14. Diff for ID 223 had different length - HTTP 200
+
+.request
+include::{snippets}/not-same-length-diff-for-223-HTTP-repsonse-200/path-parameters.adoc[]
+include::{snippets}/not-same-length-diff-for-223-HTTP-repsonse-200/http-request.adoc[]
+include::{snippets}/not-same-length-diff-for-223-HTTP-repsonse-200/curl-request.adoc[]
+
+.response
+include::{snippets}/not-same-length-diff-for-223-HTTP-repsonse-200/http-response.adoc[]
+
+
+
+
+
+
