@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class DiffUtil {
     private static final Logger log = LoggerFactory.getLogger(DiffUtil.class);
-    public static List<Difference> getListOfDifferencecIfAny(final String leftData, final String rightData) throws IllegalStateOfModelException {
+    public static List<Difference> getListOfDifferencecIfAny(final String leftData, final String rightData) {
         List<Difference> differences = new ArrayList<Difference>();
         BufferedInputStream buffISLeft = null;
         BufferedInputStream buffISRight = null;

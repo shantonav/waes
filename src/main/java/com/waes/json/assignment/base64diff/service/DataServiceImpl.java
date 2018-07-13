@@ -87,7 +87,7 @@ public class DataServiceImpl implements DataService{
     }
 
     @Override
-    public DiffOutcome getDiff(Integer id)  {
+    public DiffOutcome getDiff(Integer id) {
         Binary binaryFromDB = getBinary(id);
 
 
@@ -115,7 +115,7 @@ public class DataServiceImpl implements DataService{
         return getDiffOutcome(originalLeftData,originalRightData);
     }
 
-    private DiffOutcome getDiffOutcome(final String originalLeftData,final String originalRightData) {
+    private DiffOutcome getDiffOutcome(final String originalLeftData,final String originalRightData) throws IllegalStateOfModelException {
 
         DiffOutcome diffOutcome = null;
 

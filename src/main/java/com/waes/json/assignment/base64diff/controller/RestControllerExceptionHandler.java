@@ -2,6 +2,7 @@ package com.waes.json.assignment.base64diff.controller;
 
 import com.waes.json.assignment.base64diff.domain.ApiError;
 import com.waes.json.assignment.base64diff.domain.SystemError;
+import com.waes.json.assignment.base64diff.exception.IllegalStateOfModelException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -74,6 +76,14 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
                     SystemError.GENERAL_ERROR.getErrorMessage(),
                     ex.getLocalizedMessage()), status);
         }
+    }
+
+    @ExceptionHandler(value = {IllegalStateOfModelException.class})
+    protected ResponseEntity<Object> handleIllegalStateOfModelException(
+            final IllegalStateOfModelException ex){
+        return new ResponseEntity(new  ApiError(SystemError.INPUT_DATA_ERROR.getErrorCode(),
+                SystemError.INPUT_DATA_ERROR.getErrorMessage(),
+                ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @Override
